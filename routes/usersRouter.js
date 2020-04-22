@@ -5,7 +5,7 @@ const Response = require('../model/response').Response
 
 /* GET users listing. */
 
-router.get('/', (req, res) => {
+router.get('/get', (req, res) => {
   if (Array.isArray(usersdb.users) && usersdb.users.length) {
     res.render('index', new Response(true, 'success', usersdb.users));
   } else {
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   }
 });
 
-router.get('/:userId', (req, res) => {
+router.get('/get/:userId', (req, res) => {
   const user = usersdb.getUserById(req.params.userId)
 
   if(user !== undefined){
@@ -22,17 +22,6 @@ router.get('/:userId', (req, res) => {
     res.render('crappy_error', new Response(false, 'failed'))
   }
 });
-
-router.delete('/delete', (req, res) => {
-  const userId = req.query.userId;
-  const deletedUser = usersdb.deleteById(userId)
-
-  if(deletedUser !== undefined){
-    res.send(new Response(true, 'success', deletedUser))
-  } else{
-    res.send(new Response(false, 'failed'))
-  }
-})
 
 router.post('/create', (req, res) => {
   usersdb.add(req.body).then(user => {
@@ -45,9 +34,26 @@ router.post('/create', (req, res) => {
   })
 });
 
-
 router.patch('/update', (req, res) => {
+  usersdb.updateById(req).then(user => {
+    if(user !== undefined){
+      res.send(new Response(true, 'success', user))
+    } else {
+      res.send(new Response(false, 'failed'))
+      //todo esto es una cagada, no?
+    }
+  })
+})
 
+router.delete('/delete', (req, res) => {
+  const userId = req.query.userId;
+  const deletedUser = usersdb.deleteById(userId)
+
+  if(deletedUser !== undefined){
+    res.send(new Response(true, 'success', deletedUser))
+  } else{
+    res.send(new Response(false, 'failed'))
+  }
 })
 
 

@@ -7,7 +7,8 @@ class User {
         this.gender = gender;
         this.count = count;
 
-        //todo le quise agregar que los id no fuesen mutables pero rompi todo
+        //todo le quise agregar que los id no fuesen mutables pero rompi todo. y al final me di cuenta que no
+        //todo queria hacer eso tampoco porque me sirvo de que no sea inmutable
         /*Object.defineProperty(this, "id", {
             writable: false
         });*/

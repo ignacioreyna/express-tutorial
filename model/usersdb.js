@@ -13,12 +13,10 @@ let users = [
 async function add(body)  {
 
     const user = new User(body.name, body.gender, body.count)
-    const isValid = await validator.validateUserSchema(user)
-    if(isValid) {
+
+    if(await validator.validateUserSchema(user)) {
         users.push(user)
         return user
-    } else {
-        return undefined
     }
 }
 
@@ -30,9 +28,31 @@ function deleteById(userid){
     return _.remove(users, {id: userid})
 }
 
+async function updateById(req){
+
+    const name = req.body.name
+    const gender = req.body.gender
+    const count = req.body.count
+
+    const userid = req.query.userId
+
+    let newUserData = new User(name, gender, count)
+
+    let userToUpdate = getUserById(userid)
+
+    const schemaIsValid = await validator.validateUserSchema(newUserData)
+    if(userToUpdate !== undefined && schemaIsValid){
+        deleteById(userToUpdate.id)
+        newUserData.id = userid
+        users.push(newUserData)
+        return newUserData
+    }
+}
+
 module.exports = {
     users,
     add,
     getUserById,
     deleteById,
+    updateById,
 }
