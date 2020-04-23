@@ -28,6 +28,7 @@ function deleteById(userid){
     return _.remove(users, {id: userid})
 }
 
+//las async devuelven promises?
 async function updateById(req){
 
     const name = req.body.name

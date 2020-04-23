@@ -7,7 +7,7 @@ const Response = require('../model/response').Response
 
 router.get('/get', (req, res) => {
   if (Array.isArray(usersdb.users) && usersdb.users.length) {
-    res.render('index', new Response(true, 'success', usersdb.users));
+    res.render('users_list', new Response(true, 'success', usersdb.users));
   } else {
     res.render('crappy_error', new Response(false, 'failed'))
   }

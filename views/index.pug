@@ -1,12 +1,5 @@
 extends layout
 
 block content
-  div.container
-    h2= 'Users'
-
-    table.table.table-striped
-      for user in payload
-        tr
-          td
-            a(base href=user.id+'/') #{user.name}
-            //todo resolver el tema de que sin la barra del final no funciona
+    div.container
+        h2= 'Click on the HOME button to list all users'
